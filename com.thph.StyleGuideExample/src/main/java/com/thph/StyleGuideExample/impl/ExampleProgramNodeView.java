@@ -52,25 +52,19 @@ public class ExampleProgramNodeView implements SwingProgramNodeView<ExampleProgr
 
 	private URSpacingSize urSpacingSize = new URSpacingSize();
 	private URSpacing urSpacing = new URSpacing();
-
+	//Initialize the preview UI class.
+	private static PreviewUI previewUI = new PreviewUI();
+	
 	public ExampleProgramNodeView() {
 
 	}
-
+	
 	@Override
 	public void buildUI(JPanel panel, ContributionProvider<ExampleProgramNodeContribution> provider) {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		
-//		panel.add(showTextFields());
-		panel.add(showTabs());
-//		panel.add(showTables());
-//		panel.add(showSlider());
-//		panel.add(showLoadingBar());
-//		panel.add(showDivider());
-//		panel.add(showDifferentMessageType());
-//		panel.add(showToggles());
-//		panel.add(showButtons());
-
+	
+		System.out.println("buildUI change");
+		panel.add(exampleTabs());
 	}
 	
 	
@@ -80,27 +74,17 @@ public class ExampleProgramNodeView implements SwingProgramNodeView<ExampleProgr
 	 * To run, right-click on this class and run as java application.
 	 * @param args
 	 */
-	public static void main(String args[]) {
-		
-		//Initialize the preview UI class.
-		PreviewUI ui = new PreviewUI();
-		
+	public static void main(String args[]) {		
 		//Initialize the program node panel.
-		JPanel panel = ui.AddComponentsToUI("Example ProgramNode");
+		JPanel panel = previewUI.ProgramNodePanel("Example ProgramNode");
 		
-		//Adds UI component to the panel.
-		panel.add(ui.showTextFields());
-//		panel.add(ui.showTabs());
-//		panel.add(ui.showTables());
-//		panel.add(ui.showSlider());
-//		panel.add(ui.showLoadingBar());
-//		panel.add(ui.showDivider());
-//		panel.add(ui.showDifferentMessageType());
-//		panel.add(ui.showToggles());
-//		panel.add(ui.showButtons());
+		
+		System.out.println("main !");
+		ExampleProgramNodeView nv = new ExampleProgramNodeView();
+		nv.buildUI(panel, null);
 		
 		//adds the panel to be able to preview.
-		ui.PreviewProgramNodeUI(panel);
+		previewUI.PreviewProgramNodeUI(panel);
 		
 		
 	}
@@ -121,6 +105,37 @@ public class ExampleProgramNodeView implements SwingProgramNodeView<ExampleProgr
 		return box;
 
 	}
+	
+	private Box exampleTabs() {
+		Box box = Box.createHorizontalBox();
+		box.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		JTabbedPane tabPane = tabs.getTabbedPane(100);
+		JPanel buttonPanel = previewUI.URPanel();
+		JPanel dropDownPanel = previewUI.URPanel();
+		JPanel slidersPanel = previewUI.URPanel();
+		JPanel progressPanel = previewUI.URPanel();
+		JPanel messagesPanel = previewUI.URPanel();
+		JPanel tabelsPanel = previewUI.URPanel();
+
+		buttonPanel.add(showButtons());
+		//dropDownPanel.add(this.showDropdowns());
+		slidersPanel.add(this.showSlider());
+		progressPanel.add(this.showLoadingBar());
+		messagesPanel.add(this.showDifferentMessageType());
+		tabelsPanel.add(this.showTables());
+		
+		tabPane.addTab("Buttons", buttonPanel);
+		//tabPane.addTab("DropDown", dropDownPanel);
+		tabPane.addTab("Sliders", slidersPanel);
+		tabPane.addTab("Progress", progressPanel);
+		tabPane.addTab("Messages", messagesPanel);
+		tabPane.addTab("Tabels", tabelsPanel);
+
+		box.add(tabPane);
+
+		return box;
+	}	
 
 	private Box showTabs() {
 		Box box = Box.createHorizontalBox();
@@ -289,23 +304,22 @@ public class ExampleProgramNodeView implements SwingProgramNodeView<ExampleProgr
 		
 		Box box = Box.createVerticalBox();
 		box.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-		box.add(buttonLib.getLargeButtonDisabled("MyLarge", 200));
+		/*
+		box.add(buttonLib.getLargeButtonDisabled("MyLargeDis", 200));
 		box.add(urSpacing.createVerticalSpacing(urSpacingSize.VERTICAL_SPACING));
-		box.add(buttonLib.getLargeButtonEnabled("MyCTAButtonMedium", 200));
+		box.add(buttonLib.getLargeButtonEnabled("MyLargeButtonEn", 200));
 
 		box.add(urSpacing.createVerticalSpacing(urSpacingSize.VERTICAL_SPACING));
-
-		box.add(buttonLib.getSmallButtonEnabled("MySmallButtonMedium", 200));
+		*/
+		box.add(buttonLib.getSmallButtonEnabled("MySmallButton", 200));
 		box.add(urSpacing.createVerticalSpacing(urSpacingSize.VERTICAL_SPACING));
-		box.add(buttonLib.getSmallButtonDisabled("MySmallButtonMedium", 200));
+		box.add(buttonLib.getSmallButtonDisabled("MySmallButton", 200));
 
 		box.add(urSpacing.createVerticalSpacing(urSpacingSize.VERTICAL_SPACING));
 
 		box.add(buttonLib.getMediumCTAButtonDisabled("MyCTAButtonMedium", 200));
 		box.add(urSpacing.createVerticalSpacing(urSpacingSize.VERTICAL_SPACING));
 		box.add(buttonLib.getSmallCTAButtonEnabled("MyCTAButtonMedium", 200));
-		
 		
 		return box;
 
